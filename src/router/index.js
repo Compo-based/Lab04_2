@@ -8,6 +8,7 @@ const routes = [
     path: "/",
     name: "AllPassenger",
     component: PassengerList,
+    props: (route) => ({ page: parseInt(route.query.page) || 0, size: parseInt(route.query.size) || 10 })
   },
   {
     path: "/about",

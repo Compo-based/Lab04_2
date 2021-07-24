@@ -1,10 +1,15 @@
 <template>
-  <div v-if="passenger">
-    <h1>{{ passenger.name }}</h1>
-    <h4>{{ passenger.airline.name }}</h4>
-    <h4 v-for="airline in passenger.airline" :key="airline.id">
-      {{ airline.name }}
-    </h4>
+  <div v-if="passenger" class="Passenger">
+    <p><b>Name:</b> {{ passenger.name }}</p>
+    <p><b>ID:</b> {{ passenger._id }}</p>
+    <p><b>Trips:</b> {{ passenger.trips }}</p>
+    <span>
+      <b> Airline: </b>
+      <span>{{ passenger.airline.name }}</span>
+      <span v-for="airline in passenger.airline" :key="airline.id">
+        {{ airline.name }}
+      </span>
+    </span>
   </div>
 </template>
 
@@ -13,3 +18,10 @@ export default {
   props: ['passenger']
 }
 </script>
+
+<style scoped>
+.Passenger {
+  text-align: start;
+  margin-left: 10%;
+}
+</style>

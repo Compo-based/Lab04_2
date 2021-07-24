@@ -3,6 +3,9 @@ import PassengerList from "../views/PassengerList.vue";
 import MasterLayout from "../views/InDetail/MasterLayout.vue";
 import PassengerDetails from "../views/InDetail/PassengerDetails.vue";
 import AirlineDetails from "../views/InDetail/AirlineDetails.vue";
+import NotFound from '../views/NotFound.vue'
+import NetWorkError from '../views/NetworkError.vue'
+
 const routes = [
   {
     path: "/",
@@ -37,6 +40,22 @@ const routes = [
         component: AirlineDetails
       }
     ]
+  },
+  {
+    path: '/204/:resource',
+    name: '404Resource',
+    component: NotFound,
+    props: true
+  },
+  {
+    path: '/:catchAll(.*)',
+    name: 'NotFound',
+    component: NotFound
+  },
+  {
+    path: '/network-error',
+    name: 'NetworkError',
+    component: NetWorkError
   }
 ];
 

@@ -1,7 +1,8 @@
 import { createRouter, createWebHashHistory } from "vue-router";
 import PassengerList from "../views/PassengerList.vue";
-import PassengerDetails from "../views/PassengerDetails.vue";
-
+import MasterLayout from "../views/InDetail/MasterLayout.vue";
+import PassengerDetails from "../views/InDetail/PassengerDetails.vue";
+import AirlineDetails from "../views/InDetail/AirlineDetails.vue";
 const routes = [
   {
     path: "/",
@@ -19,9 +20,22 @@ const routes = [
   },
   {
     path: '/passenger/:id',
-    name: 'PassengerDetails',
-    component: PassengerDetails,
-    props: true
+    name: 'MasterLayout',
+    component: MasterLayout,
+    props: true,
+    children: [
+      {
+        path: '',
+        name: 'PassengerDetails',
+        component: PassengerDetails
+      },
+      {
+        path: 'airline',
+        name: 'AirlineDetails',
+        props: true,
+        component: AirlineDetails
+      }
+    ]
   }
 ];
 

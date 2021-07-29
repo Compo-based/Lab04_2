@@ -3,6 +3,7 @@ import PassengerList from "../views/PassengerList.vue";
 import MasterLayout from "../views/InDetail/MasterLayout.vue";
 import PassengerDetails from "../views/InDetail/PassengerDetails.vue";
 import AirlineDetails from "../views/InDetail/AirlineDetails.vue";
+import EditDetails from "../views/InDetail/EditDetails.vue";
 import NotFound from '../views/NotFound.vue'
 import NetWorkError from '../views/NetworkError.vue'
 
@@ -38,6 +39,12 @@ const routes = [
         name: 'AirlineDetails',
         props: true,
         component: AirlineDetails
+      },
+      {
+        path: 'edit',
+        name: 'EditDetails',
+        props: true,
+        component: EditDetails
       }
     ]
   },

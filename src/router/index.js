@@ -6,6 +6,8 @@ import AirlineDetails from "../views/InDetail/AirlineDetails.vue";
 import EditDetails from "../views/InDetail/EditDetails.vue";
 import NotFound from '../views/NotFound.vue'
 import NetWorkError from '../views/NetworkError.vue'
+import EventService from '@/services/EventService.js'
+import GStore from '@/store'
 
 const routes = [
   {
@@ -28,6 +30,24 @@ const routes = [
     name: 'MasterLayout',
     component: MasterLayout,
     props: true,
+    beforeEnter: (to) => {
+      return EventService.getEvent(to.params.id)
+        .then((response) => {
+          GStore.passenger = response.data
+          if (response && response.status == 204) {
+            return {
+              name: '404Resource',
+              params: { resource: 'passenger' }
+            }
+          }
+        })
+        .catch((error) => {
+          console.log(error)
+          if (error.response && error.response.status != 204) {
+            return { name: 'NetworkError' }
+          }
+        })
+    },
     children: [
       {
         path: '',

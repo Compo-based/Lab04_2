@@ -1,4 +1,4 @@
-import { createRouter, createWebHashHistory } from "vue-router";
+import { createRouter, createWebHistory } from "vue-router";
 import PassengerList from "../views/PassengerList.vue";
 import MasterLayout from "../views/InDetail/MasterLayout.vue";
 import PassengerDetails from "../views/InDetail/PassengerDetails.vue";
@@ -88,9 +88,16 @@ const routes = [
 ];
 
 const router = createRouter({
-  history: createWebHashHistory(),
+  history: createWebHistory(process.env.BASE_URL),
   routes,
-});
+  scrollBehavior(to, from, savedPosition) {
+    if (savedPosition) {
+      return savedPosition
+    } else {
+      return { top: 0 }
+    }
+  }
+})
 
 router.beforeEach(() => {
   NProgress.start()

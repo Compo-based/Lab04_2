@@ -8,6 +8,7 @@ import NotFound from '../views/NotFound.vue'
 import NetWorkError from '../views/NetworkError.vue'
 import EventService from '@/services/EventService.js'
 import GStore from '@/store'
+import NProgress from 'nprogress'
 
 const routes = [
   {
@@ -90,5 +91,13 @@ const router = createRouter({
   history: createWebHashHistory(),
   routes,
 });
+
+router.beforeEach(() => {
+  NProgress.start()
+})
+
+router.afterEach(() => {
+  NProgress.done()
+})
 
 export default router;

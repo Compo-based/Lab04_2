@@ -54,7 +54,6 @@
 // @ is an alias to /src
 import PassengerCard from '@/components/PassengerCard.vue'
 import EventService from '@/services/EventService.js'
-import { watchEffect } from '@vue/runtime-core'
 
 export default {
   name: 'PassengerList',
@@ -77,18 +76,35 @@ export default {
       totalEvents: 0
     }
   },
-  created() {
-    watchEffect(() => {
-      EventService.getEvents(this.page, this.size)
-        .then((response) => {
-          this.passengers = response.data.data
-          this.totalEvents = response.headers['x-total-count']
+  beforeRouteEnter(routeTo, routeFrom, next) {
+    EventService.getEvents(
+      parseInt(routeTo.query.page) || 0,
+      parseInt(routeTo.query.size) || 10
+    )
+      .then((response) => {
+        next((comp) => {
+          comp.passengers = response.data.data
+          comp.totalEvents = response.headers['x-total-count'] // <--- Store it
         })
-        .catch((error) => {
-          console.log(error)
-        })
-    })
+      })
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
   },
+  beforeRouteUpdate(routeTo, routeFrom, next) {
+    EventService.getEvents(
+      parseInt(routeTo.query.page) || 0,
+      parseInt(routeTo.query.size) || 10
+    )
+      .then((response) => {
+        this.passengers = response.data.data
+        this.totalEvents = response.headers['x-total-count']
+        next()
+      })
+      .catch(() => {
+        next({ name: 'NetworkError' })
+      })
+  }
 }
 </script>
 <style scoped>
